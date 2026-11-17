@@ -1,4 +1,3 @@
- <script src="script.js">
 let cor_painel = "vermelho"
 if (cor_painel = "vermelho"){
   console.log("Atenção motorista! Código vermelho!")
