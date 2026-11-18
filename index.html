@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,154 +8,85 @@
 </head>
 <body>
     <header>
+        <h1>🛡️ UrbanWatch</h1>
+        <p>Sistema de Segurança no Transporte Público</p>
+    </header>
 
-    <h1>🛡️ UrbanWatch</h1>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('driver', this)">
+                1. Motorista
+            </button>
+            <button class="tab-btn" onclick="switchTab('audio', this)">
+                2. Áudio
+            </button>
+            <button class="tab-btn" onclick="switchTab('cco', this)">
+                3. Central CCO
+            </button>
+        </div>
 
-    <p>Sistema de Segurança no Transporte Público</p>
+        <!-- MOTORISTA -->
+        <section id="driver" class="tab-content active">
+            <h2>Painel do Motorista</h2>
+            <p><strong>Linha:</strong> 550 - Terminal Central</p>
+            <p><strong>Veículo:</strong> 4022</p>
+            <div id="status" class="status">
+                🟢 OPERAÇÃO NORMAL
+            </div>
+            <button class="action emergency" onclick="triggerAlert()">
+                🚨 ACIONAR EMERGÊNCIA
+            </button>
+            <button id="reset" class="action reset" onclick="resetSystem()" style="display:none">
+                ↺ ENCERRAR ALERTA
+            </button>
+            <div class="info">
+                <strong>Conexão:</strong>
+                <span id="connection">Conectado (simulação)</span>
+            </div>
+        </section>
 
-</header>
+        <!-- AUDIO -->
+        <section id="audio" class="tab-content">
+            <h2>Comunicação Sonora</h2>
+            <p>
+                Simulação de mensagem transmitida pelo
+                sistema de som do ônibus.
+            </p>
+            <div class="info" id="message">
+                "Aviso de segurança: Este veículo está sob
+                monitoramento por vídeo. Respeite os demais
+                passageiros. Caso presencie alguma situação
+                inadequada, comunique o motorista."
+            </div>
+            <br>
+            <button class="action blue" onclick="playAudio()">
+                🔊 REPRODUZIR ÁUDIO
+            </button>
+            <button class="action reset" onclick="stopAudio()">
+                ■ PARAR ÁUDIO
+            </button>
+            <p id="audio-status">Áudio aguardando reprodução.</p>
+        </section>
 
-
-<div class="container">
-
-
-    <div class="tabs">
-        <button class="tab-btn active"
-        onclick="switchTab('driver', this)">
-            1. Motorista
-        </button>
-        <button class="tab-btn"
-        onclick="switchTab('audio', this)">
-            2. Áudio
-        </button>
-        <button class="tab-btn"
-        onclick="switchTab('cco', this)">
-            3. Central CCO
-        </button>
+        <!-- CENTRAL CCO -->
+        <section id="cco" class="tab-content">
+            <h2>Central de Controle Operacional</h2>
+            <p><strong>Veículo:</strong> 4022</p>
+            <p><strong>Parada:</strong> Estação das Flores</p>
+            <p>
+                <strong>Status da ocorrência:</strong>
+                <span id="occurrence">Nenhuma ocorrência.</span>
+            </p>
+            <div class="info" id="team">
+                📋 Aguardando acionamento do motorista.
+            </div>
+        </section>
     </div>
-    <!-- MOTORISTA -->
-    <section id="driver" class="tab-content active">
-        <h2>Painel do Motorista</h2>
-        <p><strong>Linha:</strong> 550 - Terminal Central</p>
-        <p><strong>Veículo:</strong> 4022</p>
-        <div id="status" class="status">
-            🟢 OPERAÇÃO NORMAL
-        </div>
-        <button class="action emergency"
-        onclick="triggerAlert()">
-            🚨 ACIONAR EMERGÊNCIA
-        </button>
-        <button id="reset" class="action reset"
-        onclick="resetSystem()" style="display:none">
-            ↺ ENCERRAR ALERTA
-        </button>
-        <div class="info">
-            <strong>Conexão:</strong>
-            <span id="connection">Conectado (simulação)</span>
-        </div>
-    </section>
-    <!-- AUDIO -->
-    <section id="audio" class="tab-content">
-        <h2>Comunicação Sonora</h2>
-        <p>
-            Simulação de mensagem transmitida pelo
-            sistema de som do ônibus.
-        </p>
-        <div class="info" id="message">
-            "Aviso de segurança: Este veículo está sob
-            monitoramento por vídeo. Respeite os demais
-            passageiros. Caso presencie alguma situação
-            inadequada, comunique o motorista."
-        </div>
-        <br>
-        <button class="action blue"
-        onclick="playAudio()">
-            🔊 REPRODUZIR ÁUDIO
-        </button>
-        <button class="action reset"
-        onclick="stopAudio()">
-            ■ PARAR ÁUDIO
-        </button>
-        <p id="audio-status">Áudio aguardando reprodução.</p>
-    </section>
-    <!-- CENTRAL CCO -->
-    <section id="cco" class="tab-content">
-        <h2>Central de Controle Operacional</h2>
-        <p><strong>Veículo:</strong> 4022</p>
-        <p><strong>Parada:</strong> Estação das Flores</p>
-        <p>
-            <strong>Status da ocorrência:</strong>
-            <span id="occurrence">Nenhuma ocorrência.</span>
-        </p>
-        <div class="info" id="team">
-            📋 Aguardando acionamento do motorista.
-        </div>
-    </section>
-</div>
-<footer>
-    SENTINELA © 2026 - Protótipo demonstrativo
-</footer>
-    <script src="script.js">
-// TROCAR ABAS
-function switchTab(tab, button) {
-    document.querySelectorAll('.tab-content')
-    .forEach(item => item.classList.remove('active'));
-    document.querySelectorAll('.tab-btn')
-    .forEach(item => item.classList.remove('active'));
-    document.getElementById(tab).classList.add('active');
-    button.classList.add('active');
-}
-// ACIONAR ALERTA
-function triggerAlert() {
-    if (!confirm("Deseja confirmar o alerta de emergência?")) {
-        return;
-    }
-    document.getElementById('status').innerHTML =
-        "🔴 ALERTA DE EMERGÊNCIA ATIVO";
-    document.getElementById('status').classList.add('alert');
-    document.getElementById('connection').innerHTML =
-        "Alerta enviado (simulação)";
-    document.getElementById('occurrence').innerHTML =
-        "Ocorrência recebida (simulação)";
-    document.getElementById('team').innerHTML =
-        "🚨 Alerta recebido! Equipe aguardando atendimento.";
-    document.getElementById('reset').style.display =
-        "inline-block";
-}
-// ENCERRAR ALERTA
-function resetSystem() {
-    document.getElementById('status').innerHTML =
-        "🟢 OPERAÇÃO NORMAL";
-    document.getElementById('status').classList.remove('alert');
-    document.getElementById('connection').innerHTML =
-        "Conectado (simulação)";
-    document.getElementById('occurrence').innerHTML =
-        "Nenhuma ocorrência.";
-    document.getElementById('team').innerHTML =
-        "📋 Aguardando acionamento do motorista.";
-    document.getElementById('reset').style.display =
-        "none";
-}
-// REPRODUZIR ÁUDIO
-function playAudio() {
-    if (!('speechSynthesis' in window)) {
-        document.getElementById('audio-status').innerHTML =
-            "Áudio não disponível neste navegador.";
-        return;
-    }
-    stopAudio();
-    let text = document.getElementById('message').innerText;
-    let speech = new SpeechSynthesisUtterance(text);
-    speech.lang = "pt-BR";
-    speechSynthesis.speak(speech);
-    document.getElementById('audio-status').innerHTML =
-        "🔊 Reproduzindo mensagem...";
-}
-// parar audio
-function stopAudio() {
-    if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-    }
-    document.getElementById('audio-status').innerHTML =
-        "Áudio interrompido.";
-}
+
+    <footer>
+        SENTINELA © 2026 - Protótipo demonstrativo
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
