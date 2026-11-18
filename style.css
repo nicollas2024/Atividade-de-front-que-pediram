@@ -90,6 +90,7 @@ footer {
     padding: 20px;
     color: #718096;
     font-size: 13px;
+    border-bottom: 4px solid #F0F8FF;
 }
 @media(max-width: 600px) {
     .tab-btn {
